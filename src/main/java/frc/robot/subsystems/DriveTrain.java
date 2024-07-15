@@ -1,76 +1,32 @@
 package frc.robot.subsystems;
 
-/*** FRC-Related Libraries ***/
-
 import edu.wpi.first.wpilibj.Joystick;
 // import edu.wpi.first.wpilibj.motorcontrol.Spark <-- not in use currently
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 public class DriveTrain extends SubsystemBase{
-    /*---Part to ID Assignments---*/
     // DriveTrain Motors
     public VictorSPX RightFront = new VictorSPX(0);
     public VictorSPX RightRear = new VictorSPX(1);
     public VictorSPX LeftFront = new VictorSPX(2);
     public VictorSPX LeftRear = new VictorSPX(3);
 
-    // Shooting Wheel Motors
-    public TalonSRX RightShooterWheel = new TalonSRX(4);
-    public TalonSRX LeftShooterWheel = new TalonSRX(7);
-
-    // Shooting Arm Motors
-    public TalonSRX RightShooterArm = new TalonSRX(5);
-    public TalonSRX LeftShooterArm = new TalonSRX(6);
-
     // PS4 Joystick
     public Joystick driverJoystick = new Joystick(0);
-
-    // Climbing Arm Motors
-    public static final int leftMotorID = 15;
-    public static final int rightMotorID = 14;
-    public CANSparkMax ClimberLeft = new CANSparkMax(leftMotorID, MotorType.kBrushless);
-    public CANSparkMax ClimberRight = new CANSparkMax(rightMotorID, MotorType.kBrushless);
     
-    /***** Key-Binding Assignments *****/
-    
-    // DriveTrain Varible & Control
+    // DriveTrain Keybind + Power
     double turn = driverJoystick.getRawAxis(0) * 0.3;
     double speed = -driverJoystick.getRawAxis(5) * 0.3;
-
-    // Climbing Arm Varible & Control
-    double Pull = driverJoystick.getRawAxis(3) * 0.3;
-    double Push = driverJoystick.getRawAxis(2) * 0.3;
-
-    // Shooting Arm Varible & Control
-    double Raise = driverJoystick.getRawButton(2) ? 0.2: 0;
-    double Lower = driverJoystick.getRawButton(4) ? 0.2: 0;
-
-    // Shooting Wheel Variable & Calculation
-    double Intake = driverJoystick.getRawButton(1) ? 0.5: 0;
-    double Outtake = driverJoystick.getRawButton(3) ? 1: 0;
 
     /***** Calcuations *****/
 
     // DriveTrain Calcuation
     double left = speed + turn;
     double right = speed - turn;
-
-    // Climbing Arm Calculation
-    double climbSpeed = Pull - Push; // when ClimbingArm is extending, Pull = 1
-
-    // Shooting Arm Calculation
-    double ArmSpeed = Raise - Lower;
-
-    // Shooting Wheel Calculation
-    double shootingSpeed = Intake - Outtake;
 
     /*--PID stuff (Still in Progress)--*/
     // read PID coefficients from SmartDashboard
@@ -131,18 +87,5 @@ public void periodic() {
     RightRear.set(ControlMode.PercentOutput, 0 + right);
     LeftFront.set(ControlMode.PercentOutput, 0 + left);
     LeftRear.set(ControlMode.PercentOutput, 0 + left);
-
-    // Climbing Arm Setting
-    ClimberRight.set(0 + climbSpeed);
-    ClimberLeft.set(0 + climbSpeed);
-
-    // Shooting Arm Setting
-    RightShooterArm.set(ControlMode.PercentOutput, 0 + ArmSpeed);
-    LeftShooterArm.set(ControlMode.PercentOutput, 0 + ArmSpeed);
-
-    // Shooting Wheel Setting
-    
-    RightShooterWheel.set(ControlMode.PercentOutput, 0 + shootingSpeed);
-    LeftShooterWheel.set(ControlMode.PercentOutput, 0 + shootingSpeed);
 }
 } 
