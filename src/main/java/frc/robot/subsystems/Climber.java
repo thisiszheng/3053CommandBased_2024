@@ -14,13 +14,16 @@ public class Climber extends SubsystemBase {
   public CANSparkMax ClimberLeft = new CANSparkMax(leftMotorID, MotorType.kBrushless);
   public CANSparkMax ClimberRight = new CANSparkMax(rightMotorID, MotorType.kBrushless);
 
+  // Motor Output Limit
+  public double climbSpeedLimit = 0.3;
+
   // PS4 Joystick
   public Joystick driverJoystick = new Joystick(0);
 
   public Climber() {
-    // Climbing Keybind + Power
-    double Pull = driverJoystick.getRawAxis(3) * 0.3;
-    double Push = driverJoystick.getRawAxis(2) * 0.3;
+    // Climbing Keybind + Power (remember to have the final output to be max -0.3 to 0.3)
+    double Push = driverJoystick.getRawAxis(2) * climbSpeedLimit;
+    double Pull = driverJoystick.getRawAxis(3) * climbSpeedLimit;
 
     // Climbing Arm Calculation
     double climbSpeed = Pull - Push; // when ClimbingArm is extending, Pull = 1

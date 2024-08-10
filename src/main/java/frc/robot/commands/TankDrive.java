@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class TankDrive extends Command{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DriveTrain driveTrain;
-    private final double driveSpeed;
+    DriveTrain driveTrain;
+    double driveSpeed;
 
     public TankDrive(DriveTrain driveTrain, double driveSpeed) {
     this.driveTrain = driveTrain;

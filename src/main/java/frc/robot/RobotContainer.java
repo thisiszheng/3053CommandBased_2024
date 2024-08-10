@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IntakeShooterConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -34,10 +37,10 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
     driveTrain.setDefaultCommand(
-      new TankDrive(driveTrain, 0)
+      new TankDrive(driveTrain, DriveConstants.driveSpeed)
     );
-    climber.setDefaultCommand(new Climb(climber, 0));
-    intakeShooter.setDefaultCommand(new IntakeShoot(intakeShooter, 0));
+    climber.setDefaultCommand(new Climb(climber, ClimberConstants.climbSpeed));
+    intakeShooter.setDefaultCommand(new IntakeShoot(intakeShooter, IntakeShooterConstants.intakeSpeed));
   }
 
   /**
